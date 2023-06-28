@@ -1,0 +1,25 @@
+on:
+    push:
+      branches:
+        - main
+    workflow_dispatch:
+    
+jobs:
+    deploy_app:
+      name: run pull
+      runs-on: ubuntu-latest
+      
+      steps: 
+            
+      - name: install ssh keys
+ 
+        run: |
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
+ 
+      - name: connect and pull repo
+        run:  |
+         ssh forte@52.24.172.239    "cd /home/forte/forte/forte_devops_ci && git pull origin main"
+         ssh forte@52.24.172.239    "cd /home/forte/forte/forte_devops_ci && echo "test" > test.txt"
+  
