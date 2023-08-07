@@ -4,7 +4,7 @@ on:
         - main 
     workflow_dispatch: 
         
-jobs:   
+jobs:    
     deploy_app:
       name: run pull
       runs-on: ubuntu-latest  
