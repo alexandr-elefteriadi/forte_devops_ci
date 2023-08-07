@@ -31,7 +31,7 @@ jobs:
       - name: Send Notification
         run: |
           echo $github.workflow 
-          if [[ ${{ github.workflow_run.conclusion }} == 'success' ]]; then
+          if [[ ${{ github.workflow == 'completed'  }} == 'success' ]]; then
             curl -X POST -H 'Content-type: application/json' --data '{"text": "<!channel> Ура! Рабочий процесс успешно завершен."}' ${{ secrets.SLACK_WEBHOOK_URL }}
           else
             curl -X POST -H 'Content-type: application/json' --data '{"text": "<!channel> Ошибка! Рабочий процесс завершился с ошибкой."}' ${{ secrets.SLACK_WEBHOOK_URL }}
