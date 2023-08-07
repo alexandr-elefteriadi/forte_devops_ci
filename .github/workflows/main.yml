@@ -21,5 +21,5 @@ jobs:
       - name: connect and pull repo
         run:  |
          ssh forte@52.24.172.239    "cd /home/forte/forte/forte_devops_ci && git pull origin main"
-         ssh fortme@52.24.172.239    "cd /home/forte/forte/forte_devops_ci && echo "test123" > test.txt"
+         ssh forte@52.24.172.239    "cd /home/forte/forte/forte_devops_ci && echo "test123" > test.txt"
   
