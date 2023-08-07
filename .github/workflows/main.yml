@@ -1,13 +1,16 @@
 on:
     push:
-      branches:
+
+     branches:
         - main
     workflow_dispatch:
-     
-jobs:
+        
+jobs:    
+
+
     deploy_app:
       name: run pull
-      runs-on: ubuntu-latest
+      runs-on: ubuntu-latest  
       
       steps: 
             
@@ -18,8 +21,9 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
  
-      - name: connect and pull repo
+      - name: connect and pull repo 
         run:  |
+         curl -X POST -H 'Content-type: application/json' --data '{"text": ":bangbang: <!channel> Deployment was launched."}' ${{ secrets.SLACK_WEBHOOK_URL }}
          ssh forte@52.24.172.239    "cd /home/forte/forte/forte_devops_ci && git pull origin main"
-         ssh forte@52.24.172.239    "cd /home/forte/forte/forte_devops_ci && echo "test" > test.txt"
-  
+         ssh forte@52.24.172.239    "cd /home/forte/forte/forte_devops_ci && echo "test123" > test.txt"
+          
