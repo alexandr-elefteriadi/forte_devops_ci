@@ -20,15 +20,7 @@ jobs:
  
       - name: connect and pull repo 
         run:  |
+         curl -X POST -H 'Content-type: application/json' --data '{"text": ":bangbang: <!channel> Deployment was launched."}' ${{ secrets.SLACK_WEBHOOK_URL }}
          ssh forte@52.24.172.239    "cd /home/forte/forte/forte_devops_ci && git pull origin main"
          ssh forte@52.24.172.239    "cd /home/forte/forte/forte_devops_ci && echo "test123" > test.txt"
-  
-    send_notification:
-      needs: deploy_app
-      if: ${{ always() }}
-      runs-on: ubuntu-latest
-      steps:
-      - name: Send Notification
-        run: |
-            curl -X POST -H 'Content-type: application/json' --data '{"text": ":bangbang: <!channel> Deployment was launched."}' ${{ secrets.SLACK_WEBHOOK_URL }}
           
