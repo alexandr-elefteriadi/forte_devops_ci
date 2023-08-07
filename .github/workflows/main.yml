@@ -23,9 +23,15 @@ jobs:
          ssh forte@52.24.172.239    "cd /home/forte/forte/forte_devops_ci && git pull origin main"
          ssh forфte@52.24.172.239    "cd /home/forte/forte/forte_devops_ci && echo "test123" > test.txt"
   
-         if [[ ${{ job.status }} == 'success' ]]; then
+    send_notification:
+      needs: deploy_app
+      if: always()
+      runs-on: ubuntu-latest
+      steps:
+      - name: Send Notification
+        run: |
+          if [[ ${{ github.workflow }} == 'success' ]]; then
             curl -X POST -H 'Content-type: application/json' --data '{"text": "<!channel> Ура! Рабочий процесс успешно завершен."}' ${{ secrets.SLACK_WEBHOOK_URL }}
-         else
+          else
             curl -X POST -H 'Content-type: application/json' --data '{"text": "<!channel> Ошибка! Рабочий процесс завершился с ошибкой."}' ${{ secrets.SLACK_WEBHOOK_URL }}
           fi
-        
