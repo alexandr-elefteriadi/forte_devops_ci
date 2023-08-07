@@ -20,7 +20,11 @@ jobs:
  
       - name: connect and pull repo 
         run:  |
-         curl -X POST -H 'Content-type: application/json' --data '{"text": "<!channel> Всем привет! У нас есть новое событие в репозитории."}' ${{ secrets.SLACK_WEBHOOK_URL }}
+         if [[ ${{ job.status }} == 'success' ]]; then
+            curl -X POST -H 'Content-type: application/json' --data '{"text": "<!channel> Ура! Рабочий процесс успешно завершен."}' ${{ secrets.SLACK_WEBHOOK_URL }}
+         else
+            curl -X POST -H 'Content-type: application/json' --data '{"text": "<!channel> Ошибка! Рабочий процесс завершился с ошибкой."}' ${{ secrets.SLACK_WEBHOOK_URL }}
+          fi
          ssh forte@52.24.172.239    "cd /home/forte/forte/forte_devops_ci && git pull origin main"
          ssh forte@52.24.172.239    "cd /home/forte/forte/forte_devops_ci && echo "test123" > test.txt"
   
